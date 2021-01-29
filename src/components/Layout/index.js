@@ -1,6 +1,9 @@
+import cn from 'classnames';
 import s from './Layout.module.css';
 
 const Layout = ({ id, title, descr, urlBg, colorBg }) => {
+  const classNamesDesc = cn('desc, full');
+
   const backgroundImg = `url(${urlBg})`;
 
   const layoutStylesImage = {
@@ -21,7 +24,7 @@ const Layout = ({ id, title, descr, urlBg, colorBg }) => {
             <h3>{title}</h3>
             <span className='separator'></span>
           </div>
-          <div className='desc full'>
+          <div className={classNamesDesc}>
             <p>{descr}</p>
           </div>
         </article>
