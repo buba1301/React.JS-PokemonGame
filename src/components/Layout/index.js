@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import s from './Layout.module.css';
 
-const Layout = ({ id, title, descr, urlBg, colorBg }) => {
+const Layout = ({ id, title, urlBg, colorBg, children }) => {
   const classNamesDesc = cn('desc, full');
 
   const backgroundImg = `url(${urlBg})`;
@@ -14,7 +14,7 @@ const Layout = ({ id, title, descr, urlBg, colorBg }) => {
     background: colorBg,
   };
 
-  const styles = urlBg === '' ? layoutStyleColor : layoutStylesImage;
+  const styles = !urlBg ? layoutStyleColor : layoutStylesImage;
 
   return (
     <section className={s.root} id={id} style={styles}>
@@ -24,9 +24,7 @@ const Layout = ({ id, title, descr, urlBg, colorBg }) => {
             <h3>{title}</h3>
             <span className='separator'></span>
           </div>
-          <div className={classNamesDesc}>
-            <p>{descr}</p>
-          </div>
+          <div className={classNamesDesc}>{children}</div>
         </article>
       </div>
     </section>
