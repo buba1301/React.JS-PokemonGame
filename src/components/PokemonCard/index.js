@@ -23,10 +23,8 @@ const PokemonCard = ({ type, values, name, img, id }) => {
             <div className={cn(s.pokemon, s[type])}>
               <div className={s.values}>
                 {valuesToArray.map(([key, value]) => {
-                  const classNames = cn(s.count, s[key]);
-
                   return (
-                    <div className={classNames} key={key}>
+                    <div className={cn(s.count, s[key])} key={key}>
                       {value}
                     </div>
                   );
