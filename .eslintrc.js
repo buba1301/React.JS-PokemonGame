@@ -13,7 +13,7 @@ module.exports = {
   },
   plugins: ['prettier', 'prettier', 'react'],
   rules: {
-    'no-console': 'error',
+    'no-console': 'off',
     'react/jsx-filename-extension': [
       'error',
       { extensions: ['.jsx', '.tsx', '.ts', '.js'] },
