@@ -12,7 +12,7 @@ const NavBar = ({ handleOpenCloseMenu, isActiveMenu }) => {
     <nav id={s.navbar}>
       <div className={s.navWrapper}>
         <p className={s.brand}>LOGO</p>
-        <a className={buttonClassNames} onClick={handleClick}>
+        <a href='#button' className={buttonClassNames} onClick={handleClick}>
           <span />
         </a>
       </div>
