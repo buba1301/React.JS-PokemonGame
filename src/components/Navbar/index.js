@@ -6,7 +6,7 @@ const NavBar = ({ handleOpenCloseMenu, isActiveMenu }) => {
     handleOpenCloseMenu && handleOpenCloseMenu();
   };
 
-  const buttonClassNames = cn(s.menuButton, isActiveMenu ? s.active : '');
+  const buttonClassNames = cn(s.menuButton, { [s.active]: isActiveMenu });
 
   return (
     <nav id={s.navbar}>

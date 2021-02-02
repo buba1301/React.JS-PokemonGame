@@ -1,30 +1,25 @@
 import cn from 'classnames';
+import routes from '../../routes';
 
 import s from './Menu.module.css';
 
 const Menu = ({ isActiveMenu }) => {
-  const classNamesMenuContainer = cn(
-    s.menuContainer,
-    isActiveMenu ? s.active : ''
-  );
+  const classNamesMenuContainer = cn(s.menuContainer, {
+    [s.active]: isActiveMenu,
+  });
 
   return (
     <div className={classNamesMenuContainer}>
       <div className={s.overlay} />
       <div className={s.menuItems}>
         <ul>
-          <li>
-            <a href='#welcome'>HOME</a>
-          </li>
-          <li>
-            <a href='#game'>GAME</a>
-          </li>
-          <li>
-            <a href='#about'>ABOUT</a>
-          </li>
-          <li>
-            <a href='#contact'>CONTACT</a>
-          </li>
+          {routes.map(({ name, href }) => {
+            return (
+              <li>
+                <a href={href}>{name}</a>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
