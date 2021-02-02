@@ -3,7 +3,7 @@ import s from './NavBar.module.css';
 
 const NavBar = ({ handleOpenCloseMenu, isActiveMenu }) => {
   const handleClick = () => {
-    handleOpenCloseMenu();
+    handleOpenCloseMenu && handleOpenCloseMenu();
   };
 
   const buttonClassNames = cn(s.menuButton, isActiveMenu ? s.active : '');
