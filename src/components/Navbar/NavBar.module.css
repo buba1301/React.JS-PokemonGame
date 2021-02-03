@@ -8,7 +8,7 @@
 	cursor: pointer;
 }
 
-#navbar.bgActive {
+#navbar .bgActive {
   background: #181d23;
 }
 

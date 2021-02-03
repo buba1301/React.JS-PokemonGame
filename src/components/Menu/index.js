@@ -5,8 +5,8 @@ import s from './Menu.module.css';
 
 const Menu = ({ isActiveMenu }) => {
   const classNamesMenuContainer = cn(s.menuContainer, {
-    [s.active]: isActiveMenu,
-    [s.deactive]: !isActiveMenu,
+    [s.active]: isActiveMenu === true,
+    [s.deactive]: isActiveMenu === false,
   });
 
   return (

@@ -1,4 +1,4 @@
-import MenuNavBar from '../../components/MenuNavBar';
+import MenuHeader from '../../components/MenuHeader';
 import Header from '../../components/Header';
 import Layout from '../../components/Layout';
 import PokemonCard from '../../components/PokemonCard';
@@ -19,7 +19,7 @@ const HomePage = ({ onChangePage }) => {
 
   return (
     <>
-      <MenuNavBar />
+      <MenuHeader />
       <Header
         title='This is Pokemons Card Game'
         desc='Fight or Die'
