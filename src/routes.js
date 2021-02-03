@@ -1,19 +1,19 @@
 const routes = [
   {
     name: 'HOME',
-    href: '#welcome',
+    to: '/home',
   },
   {
     name: 'GAME',
-    href: '#game',
+    to: '/game',
   },
   {
     name: 'ABOUT',
-    href: '#about',
+    to: '/about',
   },
   {
     name: 'CONTACT',
-    href: '#contact',
+    to: '/contact',
   },
 ];
 

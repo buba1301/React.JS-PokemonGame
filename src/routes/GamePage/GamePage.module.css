@@ -1,0 +1,9 @@
+.root {
+  background: #ffffff;
+  background-attachment: fixed;
+	background-size: cover;
+	position: relative;
+  min-height: 100vh;
+  margin: 0 auto;
+  z-index: 1;
+}
