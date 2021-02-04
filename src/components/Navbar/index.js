@@ -6,8 +6,6 @@ const NavBar = ({ handleOpenCloseMenu, isActiveMenu, bgActive = false }) => {
     handleOpenCloseMenu && handleOpenCloseMenu();
   };
 
-  console.log('BG Active', bgActive);
-
   const buttonClassNames = cn(s.menuButton, { [s.active]: isActiveMenu });
   const navClassNames = cn({ [s.bgActive]: bgActive });
 

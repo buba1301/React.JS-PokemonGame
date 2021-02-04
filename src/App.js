@@ -13,8 +13,6 @@ import s from './App.module.css';
 const App = () => {
   const match = useRouteMatch('/');
 
-  console.log('Mtach', !match.isExact);
-
   const wrapClassNames = cn(s.wrap, { [s.isHomePage]: match.isExact });
 
   return (
@@ -26,7 +24,6 @@ const App = () => {
           <div className={wrapClassNames}>
             <Switch>
               <Route exact path='/' component={HomePage} />
-              <Route path='/home' component={HomePage} />
               <Route path='/game' component={GamePage} />
               <Route path='/about' component={AboutPage} />
               <Route path='/contact' component={ContactPage} />

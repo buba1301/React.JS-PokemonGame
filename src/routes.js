@@ -1,7 +1,7 @@
 const routes = [
   {
     name: 'HOME',
-    to: '/home',
+    to: '/',
   },
   {
     name: 'GAME',
