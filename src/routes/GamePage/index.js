@@ -13,9 +13,7 @@ const GamePage = () => {
       return prevState.map((item) => {
         const { active, id } = item;
 
-        return currentId === id.toString()
-          ? { ...item, active: !active }
-          : item;
+        return currentId === id ? { ...item, active: !active } : item;
       });
     });
   };

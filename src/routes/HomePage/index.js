@@ -1,8 +1,6 @@
-import MenuHeader from '../../components/MenuHeader';
 import Header from '../../components/Header';
 import Layout from '../../components/Layout';
 import PokemonCard from '../../components/PokemonCard';
-import Footer from '../../components/Footer';
 
 import pokemons from '../../pokemons';
 import { gameRules, gameRules1 } from '../../gameRules';

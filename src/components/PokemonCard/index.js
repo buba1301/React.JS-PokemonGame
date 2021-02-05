@@ -17,37 +17,32 @@ const PokemonCard = ({
 
   const valuesToArray = Object.entries(values);
 
-  const handleClick = ({ target }) => {
-    handleOpenCard && handleOpenCard(target.id);
+  const handleClick = () => {
+    handleOpenCard && handleOpenCard(id);
   };
 
   return (
-    <div className={s.root} onClick={handleClick} id={id}>
-      <div className={classNamesPokemonCard} id={id}>
-        <div className={s.cardFront} id={id}>
-          <div className={cn(s.wrap, s.front)} id={id}>
-            <div className={cn(s.pokemon, s[type])} id={id}>
-              <div className={s.values} id={id}>
+    <div className={s.root} onClick={handleClick}>
+      <div className={classNamesPokemonCard}>
+        <div className={s.cardFront}>
+          <div className={cn(s.wrap, s.front)}>
+            <div className={cn(s.pokemon, s[type])}>
+              <div className={s.values}>
                 {valuesToArray.map(([key, value]) => {
                   return (
-                    <div className={cn(s.count, s[key])} key={key} id={id}>
+                    <div className={cn(s.count, s[key])} key={key}>
                       {value}
                     </div>
                   );
                 })}
               </div>
-              <div className={s.imgContainer} id={id}>
-                <img src={img} alt={name} id={id} />
+              <div className={s.imgContainer}>
+                <img src={img} alt={name} />
               </div>
-              <div className={s.info} id={id}>
-                <span className={s.number} id={id}>
-                  #{id}
-                </span>
-                >
-                <h3 className={s.name} id={id}>
-                  {name}
-                </h3>
-                <small className={s[type]} id={id}>
+              <div className={s.info}>
+                <span className={s.number}>#{id}</span>>
+                <h3 className={s.name}>{name}</h3>
+                <small className={s[type]}>
                   Type: <span>{type}</span>
                 </small>
               </div>
