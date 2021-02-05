@@ -10,7 +10,9 @@ const Menu = ({ isActiveMenu, handleOpenCloseMenu }) => {
     [s.deactive]: isActiveMenu === false,
   });
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    console.log('MENU', e.target);
+
     handleOpenCloseMenu && handleOpenCloseMenu();
   };
 

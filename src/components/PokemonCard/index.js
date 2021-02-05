@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import cn from 'classnames';
 import s from './PokemonCard.module.css';
 
