@@ -4,15 +4,21 @@ import s from './PokemonCard.module.css';
 
 import imgBack from './assets/cardBack.jpg';
 
-const PokemonCard = ({ type, values, name, img, id }) => {
-  const [isActive, setActive] = useState(false);
-
-  const classNamesPokemonCard = cn(s.pokemonCard, { [s.active]: isActive });
+const PokemonCard = ({
+  type,
+  values,
+  name,
+  img,
+  id,
+  handleOpenCard,
+  active,
+}) => {
+  const classNamesPokemonCard = cn(s.pokemonCard, { [s.active]: active });
 
   const valuesToArray = Object.entries(values);
 
   const handleClick = () => {
-    setActive(!isActive);
+    handleOpenCard && handleOpenCard(id);
   };
 
   return (
@@ -34,7 +40,7 @@ const PokemonCard = ({ type, values, name, img, id }) => {
                 <img src={img} alt={name} />
               </div>
               <div className={s.info}>
-                <span className={s.number}>#{id}</span>
+                <span className={s.number}>#{id}</span>>
                 <h3 className={s.name}>{name}</h3>
                 <small className={s[type]}>
                   Type: <span>{type}</span>
@@ -46,7 +52,7 @@ const PokemonCard = ({ type, values, name, img, id }) => {
 
         <div className={s.cardBack}>
           <div className={cn(s.wrap, s.back)}>
-            <img src={imgBack} alt='Сard Backed' />
+            <img src={imgBack} alt='Сard Backed' id={id} />
           </div>
         </div>
       </div>

@@ -30,7 +30,6 @@
 		cursor: pointer;
 }
 
-/* TODO: This place where we should change :hover on .active */
 .active {
     transform: rotateY(0deg);
 }

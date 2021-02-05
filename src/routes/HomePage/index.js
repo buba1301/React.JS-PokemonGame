@@ -1,8 +1,6 @@
-import MenuNavBar from '../../components/MenuNavBar';
 import Header from '../../components/Header';
 import Layout from '../../components/Layout';
 import PokemonCard from '../../components/PokemonCard';
-import Footer from '../../components/Footer';
 
 import pokemons from '../../pokemons';
 import { gameRules, gameRules1 } from '../../gameRules';
@@ -19,7 +17,6 @@ const HomePage = ({ onChangePage }) => {
 
   return (
     <>
-      <MenuNavBar />
       <Header
         title='This is Pokemons Card Game'
         desc='Fight or Die'
@@ -49,8 +46,6 @@ const HomePage = ({ onChangePage }) => {
         </div>
       </Layout>
       <Layout key='3' id='3' title='Layout 3' urlBg={bg3} />
-
-      <Footer />
     </>
   );
 };
