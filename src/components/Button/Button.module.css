@@ -1,0 +1,22 @@
+.button {
+    font-size: 28px;
+    font-weight: normal;
+    font-style: italic;
+    color: #0f0e0e;
+    line-height: 32px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    box-shadow: inset 0px -7px 0px rgba(0, 0, 0, 0.18);
+    outline: 0;
+    padding: 9px 33px 9px;
+}
+
+.button:hover {
+    background: #f300b4;
+}
+
+.button:active {
+    box-shadow: inset 0px -5px 0px rgba(0, 0, 0, 0.18);
+    padding-bottom: 6px;
+}
