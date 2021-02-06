@@ -10,15 +10,11 @@ import { database } from '../../service/firebase';
 
 const GamePage = () => {
   const [pokemonsList, setPokemons] = useState({});
-  console.log('LIST', pokemonsList);
 
   const [newPokemon, setNewPokemon] = useState({});
 
-  console.log('NEWPOKE', newPokemon);
-
   useEffect(() => {
     database.ref('pokemons').once('value', (snapshot) => {
-      console.log('Snapshot', snapshot.val());
       setPokemons(snapshot.val());
     });
   }, [newPokemon]);
