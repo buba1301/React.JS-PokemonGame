@@ -22,12 +22,15 @@ const GamePage = () => {
       return Object.entries(prevState).reduce((acc, [key, pokemonValues]) => {
         const { active, id } = pokemonValues;
 
-        const newPokemon =
-          currentId === id
-            ? { ...pokemonValues, active: !active }
-            : pokemonValues;
+        if (currentId === id) {
+          const newPokemon = { ...pokemonValues, active: !active };
 
-        return { ...acc, [key]: newPokemon };
+          database.ref('pokemons/' + key).set(newPokemon);
+          acc = { ...acc, [key]: newPokemon };
+        } else {
+          acc = { ...acc, [key]: pokemonValues };
+        }
+        return acc;
       }, {});
     });
   };
