@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import ContactPage from './routes/ContactPage';
 
 import s from './App.module.css';
+import { FireBaseContext } from './context/fireBaseContext';
+import FireBase from './service/firebase';
 
 const App = () => {
   const match = useRouteMatch('/');
@@ -16,24 +18,26 @@ const App = () => {
   const wrapClassNames = cn(s.wrap, { [s.isHomePage]: match.isExact });
 
   return (
-    <Switch>
-      <Route path={'/404'} component={NotFound} />
-      <Route>
-        <>
-          <MenuHeader bgActive={!match.isExact} />
-          <div className={wrapClassNames}>
-            <Switch>
-              <Route exact path='/' component={HomePage} />
-              <Route path='/game' component={GamePage} />
-              <Route path='/about' component={AboutPage} />
-              <Route path='/contact' component={ContactPage} />
-              <Route render={() => <Redirect to='/404' />} />
-            </Switch>
-          </div>
-          <Footer />
-        </>
-      </Route>
-    </Switch>
+    <FireBaseContext.Provider value={new FireBase()}>
+      <Switch>
+        <Route path={'/404'} component={NotFound} />
+        <Route>
+          <>
+            <MenuHeader bgActive={!match.isExact} />
+            <div className={wrapClassNames}>
+              <Switch>
+                <Route exact path='/' component={HomePage} />
+                <Route path='/game' component={GamePage} />
+                <Route path='/about' component={AboutPage} />
+                <Route path='/contact' component={ContactPage} />
+                <Route render={() => <Redirect to='/404' />} />
+              </Switch>
+            </div>
+            <Footer />
+          </>
+        </Route>
+      </Switch>
+    </FireBaseContext.Provider>
   );
 };
 

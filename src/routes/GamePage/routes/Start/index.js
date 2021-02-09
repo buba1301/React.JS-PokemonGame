@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import pokemons from '../../../../pokemons';
 
 import PokemonCard from '../../../../components/PokemonCard';
@@ -6,42 +6,38 @@ import Button from '../../../../components/Button';
 
 import s from './Start.module.css';
 
-import { database } from '../../../../service/firebase';
+// import { database } from '../../../../service/firebase';
+import { FireBaseContext } from '../../../../context/fireBaseContext';
 
 const StartPage = () => {
+  const fireBase = useContext(FireBaseContext);
+
   const [pokemonsList, setPokemons] = useState({});
 
-  const [newPokemon, setNewPokemon] = useState({});
-
   useEffect(() => {
-    database.ref('pokemons').once('value', (snapshot) => {
-      setPokemons(snapshot.val());
+    fireBase.getPokemonsSoket((pokemons) => {
+      setPokemons(pokemons);
     });
-  }, [newPokemon]);
+  }, []);
 
   const handleOpenCard = (currentId) => {
     setPokemons((prevState) => {
       return Object.entries(prevState).reduce((acc, [key, pokemonValues]) => {
-        const { active, id } = pokemonValues;
+        const newPokemon = { ...pokemonValues };
 
-        if (currentId === id) {
-          const newPokemon = { ...pokemonValues, active: !active };
-
-          database.ref('pokemons/' + key).set(newPokemon);
-          acc = { ...acc, [key]: newPokemon };
-        } else {
-          acc = { ...acc, [key]: pokemonValues };
+        if (currentId === newPokemon.id) {
+          newPokemon.active = !newPokemon.active;
+          fireBase.postPokemon(key, newPokemon);
         }
+        acc = { ...acc, [key]: newPokemon };
+
         return acc;
       }, {});
     });
   };
 
   const handleClickAddPokemon = () => {
-    const newKey = database.ref().child('pokemons').push().key;
-    const data = pokemons[0];
-    database.ref('pokemons/' + newKey).set(data);
-    setNewPokemon(data);
+    fireBase.addPokemon(pokemons[0]);
   };
 
   return (
