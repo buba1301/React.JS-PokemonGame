@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import pokemons from '../../../../pokemons';
 
 import PokemonCard from '../../../../components/PokemonCard';
@@ -6,11 +7,14 @@ import Button from '../../../../components/Button';
 
 import s from './Start.module.css';
 
-// import { database } from '../../../../service/firebase';
 import { FireBaseContext } from '../../../../context/fireBaseContext';
+import { PokemonContext } from '../../../../context/pokemonContext';
 
 const StartPage = () => {
   const fireBase = useContext(FireBaseContext);
+  const pokemon = useContext(PokemonContext);
+
+  const history = useHistory();
 
   const [pokemonsList, setPokemons] = useState({});
 
@@ -21,28 +25,20 @@ const StartPage = () => {
   }, []);
 
   const handleOpenCard = (currentId) => {
-    setPokemons((prevState) => {
-      return Object.entries(prevState).reduce((acc, [key, pokemonValues]) => {
-        const newPokemon = { ...pokemonValues };
-
-        if (currentId === newPokemon.id) {
-          newPokemon.active = !newPokemon.active;
-          fireBase.postPokemon(key, newPokemon);
-        }
-        acc = { ...acc, [key]: newPokemon };
-
-        return acc;
-      }, {});
-    });
+    pokemon.addPokemon(
+      Object.entries(pokemonsList).find(
+        ([_key, pokemonValues]) => currentId === pokemonValues.id
+      )
+    );
   };
 
   const handleClickAddPokemon = () => {
-    fireBase.addPokemon(pokemons[0]);
+    history.push('/game/board');
   };
 
   return (
     <div className={s.container}>
-      <Button onClick={handleClickAddPokemon}>Add new pokemon</Button>
+      <Button onClick={handleClickAddPokemon}>Play Game</Button>
       <div className={s.flex}>
         {Object.entries(pokemonsList).map(
           ([key, { type, values, name, img, id, active }]) => {

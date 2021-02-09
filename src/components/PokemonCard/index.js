@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import cn from 'classnames';
 import s from './PokemonCard.module.css';
 
@@ -10,18 +11,22 @@ const PokemonCard = ({
   img,
   id,
   handleOpenCard,
-  active,
+  active = true,
   minimize = false,
   className,
 }) => {
+  const [isSelected, setIsSelected] = useState(false);
+
   const classNamesPokemonCard = cn(s[className], s.pokemonCard, {
-    [s.active]: active,
+    [s.active]: true,
+    [s.selected]: isSelected,
   });
 
   const valuesToArray = Object.entries(values);
 
   const handleClick = () => {
     handleOpenCard && handleOpenCard(id);
+    setIsSelected((prevState) => !prevState);
   };
 
   return (

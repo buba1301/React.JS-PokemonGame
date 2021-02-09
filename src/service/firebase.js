@@ -12,7 +12,10 @@ const firebaseConfig = {
 };
 class FireBase {
   constructor() {
-    firebase.initializeApp(firebaseConfig);
+    !firebase.apps.length
+      ? firebase.initializeApp(firebaseConfig)
+      : firebase.app();
+    // firebase.initializeApp(firebaseConfig);
 
     this.fire = firebase;
     this.database = this.fire.database();
