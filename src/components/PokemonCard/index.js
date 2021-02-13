@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import cn from 'classnames';
 import s from './PokemonCard.module.css';
 
@@ -9,35 +10,44 @@ const PokemonCard = ({
   name,
   img,
   id,
-  handleOpenCard,
+  handleSelectedPokemon,
   active,
+  selected,
+  minimize = false,
+  className,
 }) => {
-  const classNamesPokemonCard = cn(s.pokemonCard, { [s.active]: active });
+  // const [isSelected, setIsSelected] = useState(false);
+
+  const classNamesPokemonCard = cn(className, s.pokemonCard, {
+    [s.active]: true,
+    [s.selected]: selected,
+  });
 
   const valuesToArray = Object.entries(values);
 
   const handleClick = () => {
-    handleOpenCard && handleOpenCard(id);
+    handleSelectedPokemon && handleSelectedPokemon();
+    // setIsSelected((prevState) => !prevState);
   };
 
   return (
-    <div className={s.root} onClick={handleClick}>
-      <div className={classNamesPokemonCard}>
-        <div className={s.cardFront}>
-          <div className={cn(s.wrap, s.front)}>
-            <div className={cn(s.pokemon, s[type])}>
-              <div className={s.values}>
-                {valuesToArray.map(([key, value]) => {
-                  return (
-                    <div className={cn(s.count, s[key])} key={key}>
-                      {value}
-                    </div>
-                  );
-                })}
-              </div>
-              <div className={s.imgContainer}>
-                <img src={img} alt={name} />
-              </div>
+    <div className={classNamesPokemonCard} onClick={handleClick}>
+      <div className={s.cardFront}>
+        <div className={cn(s.wrap, s.front)}>
+          <div className={cn(s.pokemon, s[type])}>
+            <div className={s.values}>
+              {valuesToArray.map(([key, value]) => {
+                return (
+                  <div className={cn(s.count, s[key])} key={key}>
+                    {value}
+                  </div>
+                );
+              })}
+            </div>
+            <div className={s.imgContainer}>
+              <img src={img} alt={name} />
+            </div>
+            {!minimize && (
               <div className={s.info}>
                 <span className={s.number}>#{id}</span>>
                 <h3 className={s.name}>{name}</h3>
@@ -45,14 +55,14 @@ const PokemonCard = ({
                   Type: <span>{type}</span>
                 </small>
               </div>
-            </div>
+            )}
           </div>
         </div>
+      </div>
 
-        <div className={s.cardBack}>
-          <div className={cn(s.wrap, s.back)}>
-            <img src={imgBack} alt='Сard Backed' id={id} />
-          </div>
+      <div className={s.cardBack}>
+        <div className={cn(s.wrap, s.back)}>
+          <img src={imgBack} alt='Сard Backed' id={id} />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useRouteMatch, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import GamePage from './routes/GamePage';
 import HomePage from './routes/HomePage';
@@ -9,31 +9,38 @@ import Footer from './components/Footer';
 import ContactPage from './routes/ContactPage';
 
 import s from './App.module.css';
+import { FireBaseContext } from './context/fireBaseContext';
+import FireBase from './service/firebase';
 
 const App = () => {
-  const match = useRouteMatch('/');
+  const location = useLocation();
 
-  const wrapClassNames = cn(s.wrap, { [s.isHomePage]: match.isExact });
+  const isPadding =
+    location.pathname === '/' || location.pathname === '/game/board';
+
+  const wrapClassNames = cn(s.wrap, { [s.isHomePage]: isPadding });
 
   return (
-    <Switch>
-      <Route path={'/404'} component={NotFound} />
-      <Route>
-        <>
-          <MenuHeader bgActive={!match.isExact} />
-          <div className={wrapClassNames}>
-            <Switch>
-              <Route exact path='/' component={HomePage} />
-              <Route path='/game' component={GamePage} />
-              <Route path='/about' component={AboutPage} />
-              <Route path='/contact' component={ContactPage} />
-              <Route render={() => <Redirect to='/404' />} />
-            </Switch>
-          </div>
-          <Footer />
-        </>
-      </Route>
-    </Switch>
+    <FireBaseContext.Provider value={new FireBase()}>
+      <Switch>
+        <Route path={'/404'} component={NotFound} />
+        <Route>
+          <>
+            <MenuHeader bgActive={!isPadding} />
+            <div className={wrapClassNames}>
+              <Switch>
+                <Route exact path='/' component={HomePage} />
+                <Route path='/game' component={GamePage} />
+                <Route path='/about' component={AboutPage} />
+                <Route path='/contact' component={ContactPage} />
+                <Route render={() => <Redirect to='/404' />} />
+              </Switch>
+            </div>
+            <Footer />
+          </>
+        </Route>
+      </Switch>
+    </FireBaseContext.Provider>
   );
 };
 

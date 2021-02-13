@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonWrap {
+  padding: 2rem;
+}
+
+.flex {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 40px;
+
+}
+
+.card {
+  width: 268px;
+  height: 380px;
+  cursor: pointer;
+}
