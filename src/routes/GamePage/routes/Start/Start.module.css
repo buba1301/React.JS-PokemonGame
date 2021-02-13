@@ -5,19 +5,19 @@
   align-items: center;
 }
 
-.root {
-  background: #ffffff;
-  background-attachment: fixed;
-	background-size: cover;
-	position: relative;
-  min-height: 100vh;
-  margin: 0 auto;
-  z-index: 1;
+.buttonWrap {
+  padding: 2rem;
 }
 
 .flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 40px;
+
+}
+
+.card {
+  width: 268px;
+  height: 380px;
+  cursor: pointer;
 }

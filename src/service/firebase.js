@@ -27,6 +27,10 @@ class FireBase {
     });
   };
 
+  offPokemonsSoket = (cb) => {
+    this.database.ref('pokemons').off();
+  };
+
   getPokemonsOnce = async () => {
     return await this.database
       .ref('pokemons')

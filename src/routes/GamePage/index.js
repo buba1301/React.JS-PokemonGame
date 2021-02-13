@@ -9,13 +9,27 @@ import { PokemonContext } from '../../context/pokemonContext';
 const GamePage = () => {
   const match = useRouteMatch();
 
-  const [pokemons, setPokemon] = useState([]);
+  const [pokemons, setPokemon] = useState({});
+
+  const handleSelectedPokemon = (key, pokemon) => {
+    setPokemon((prevState) => {
+      if (prevState[key]) {
+        const copyState = { ...prevState };
+        delete copyState[key];
+
+        return copyState;
+      }
+
+      return {
+        ...prevState,
+        [key]: pokemon,
+      };
+    });
+  };
 
   const contextValue = {
     pokemons,
-    addPokemon(value) {
-      setPokemon((prevState) => [...prevState, value]);
-    },
+    addPokemon: handleSelectedPokemon,
   };
 
   return (

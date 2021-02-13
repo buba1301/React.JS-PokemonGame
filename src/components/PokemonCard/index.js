@@ -10,23 +10,24 @@ const PokemonCard = ({
   name,
   img,
   id,
-  handleOpenCard,
-  active = true,
+  handleSelectedPokemon,
+  active,
+  selected,
   minimize = false,
   className,
 }) => {
-  const [isSelected, setIsSelected] = useState(false);
+  // const [isSelected, setIsSelected] = useState(false);
 
-  const classNamesPokemonCard = cn(s[className], s.pokemonCard, {
+  const classNamesPokemonCard = cn(className, s.pokemonCard, {
     [s.active]: true,
-    [s.selected]: isSelected,
+    [s.selected]: selected,
   });
 
   const valuesToArray = Object.entries(values);
 
   const handleClick = () => {
-    handleOpenCard && handleOpenCard(id);
-    setIsSelected((prevState) => !prevState);
+    handleSelectedPokemon && handleSelectedPokemon();
+    // setIsSelected((prevState) => !prevState);
   };
 
   return (
