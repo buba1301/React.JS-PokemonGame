@@ -9,17 +9,25 @@ import s from './Board.module.css';
 import PlayerBoard from './components/PlayerBoard/insex';
 
 const BoardPage = () => {
+  const { pokemons } = useContext(PokemonContext);
+
   const [board, setBoard] = useState([]);
+  const [player1, setPlayer1] = useState(() => {
+    return Object.values(pokemons).map((pokemon) => {
+      return {
+        ...pokemon,
+        possession: 'blue',
+      };
+    });
+  });
   const [player2, setPlayer2] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const { pokemons } = useContext(PokemonContext);
-
   const history = useHistory();
 
-  /* if (Object.keys(pokemons).length === 0) {
+  if (Object.keys(pokemons).length === 0) {
     history.replace('/game');
-  } */
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -31,15 +39,39 @@ const BoardPage = () => {
       const palyer2Response = await fetch(routes.getPlayer2.url);
       const palyer2Request = await palyer2Response.json();
 
-      setPlayer2(palyer2Request.data);
+      setPlayer2(() => {
+        return palyer2Request.data.map((pokemon) => ({
+          ...pokemon,
+          possession: 'red',
+        }));
+      });
     };
 
     getData();
   }, []);
 
-  const handleClickBoardPlate = (position) => {
+  const handleClickBoardPlate = async (position) => {
     console.log('POSITION', position);
     console.log('SELECTED CARD', selectedCard);
+
+    if (selectedCard) {
+      const params = {
+        position,
+        card: selectedCard,
+        board,
+      };
+
+      const res = await fetch(routes.postCard.url, {
+        method: routes.postCard.method,
+        headers: routes.postCard.headers,
+        body: JSON.stringify(params),
+      });
+
+      const request = await res.json();
+
+      console.log('REQUEST', request);
+      setBoard(request.data);
+    }
   };
 
   const handleClickCard = (card) => {
@@ -50,7 +82,8 @@ const BoardPage = () => {
     <div className={s.root}>
       <div className={s.playerOne}>
         <PlayerBoard
-          cards={Object.values(pokemons)}
+          player={1}
+          cards={player1}
           onClickCard={(card) => handleClickCard(card)}
         />
       </div>
@@ -71,6 +104,7 @@ const BoardPage = () => {
 
       <div className={s.playerTwo}>
         <PlayerBoard
+          player={2}
           cards={player2}
           onClickCard={(card) => handleClickCard(card)}
         />
