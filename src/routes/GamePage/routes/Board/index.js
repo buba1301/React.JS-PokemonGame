@@ -8,6 +8,17 @@ import routes from '../../../../service/routes';
 import s from './Board.module.css';
 import PlayerBoard from './components/PlayerBoard/insex';
 
+const counterWin = (board, player1, player2) => {
+  let player1Count = player1.length;
+  let player2Count = player2.length;
+
+  board.forEach(({ card }) => {
+    card.possession === 'blue' ? (player1Count += 1) : (player2Count += 1);
+  });
+
+  return [player1Count, player2Count];
+};
+
 const BoardPage = () => {
   const { pokemons } = useContext(PokemonContext);
 
@@ -22,6 +33,7 @@ const BoardPage = () => {
   });
   const [player2, setPlayer2] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [step, setStep] = useState(0);
 
   const history = useHistory();
 
@@ -50,10 +62,22 @@ const BoardPage = () => {
     getData();
   }, []);
 
-  const handleClickBoardPlate = async (position) => {
-    console.log('POSITION', position);
-    console.log('SELECTED CARD', selectedCard);
+  useEffect(() => {
+    if (step === 9) {
+      const [count1, count2] = counterWin(board, player1, player2);
 
+      if (count1 === count2) {
+        alert('Draw');
+      }
+
+      count1 > count2 ? alert('Win') : alert('Lose');
+    }
+  }, [step]);
+
+  const filterPlayerPokemons = (prevState) =>
+    prevState.filter(({ id }) => id !== selectedCard.id);
+
+  const handleClickBoardPlate = async (position) => {
     if (selectedCard) {
       const params = {
         position,
@@ -69,8 +93,16 @@ const BoardPage = () => {
 
       const request = await res.json();
 
-      console.log('REQUEST', request);
+      selectedCard.player === 1
+        ? setPlayer1(filterPlayerPokemons)
+        : setPlayer2(filterPlayerPokemons);
+
       setBoard(request.data);
+
+      setStep((prevState) => {
+        const count = prevState + 1;
+        return count;
+      });
     }
   };
 

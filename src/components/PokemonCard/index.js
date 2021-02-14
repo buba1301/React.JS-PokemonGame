@@ -17,20 +17,15 @@ const PokemonCard = ({
   possession,
   className,
 }) => {
-  // const [isSelected, setIsSelected] = useState(false);
-
   const classNamesPokemonCard = cn(className, s.pokemonCard, {
     [s.active]: true,
     [s.selected]: selected,
   });
 
-  console.log('POSSESSION', s[possession]);
-
   const valuesToArray = Object.entries(values);
 
   const handleClick = () => {
     handleSelectedPokemon && handleSelectedPokemon();
-    // setIsSelected((prevState) => !prevState);
   };
 
   return (
