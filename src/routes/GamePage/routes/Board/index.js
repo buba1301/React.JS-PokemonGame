@@ -3,10 +3,11 @@ import { useHistory } from 'react-router-dom';
 import { PokemonContext } from '../../../../context/pokemonContext';
 
 import PokemonCard from '../../../../components/PokemonCard';
+import PlayerBoard from './components/PlayerBoard/insex';
+import Result from '../../../../components/Result';
 
 import routes from '../../../../service/routes';
 import s from './Board.module.css';
-import PlayerBoard from './components/PlayerBoard/insex';
 
 const counterWin = (board, player1, player2) => {
   let player1Count = player1.length;
@@ -34,6 +35,7 @@ const BoardPage = () => {
   const [player2, setPlayer2] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [step, setStep] = useState(0);
+  const [result, setResult] = useState(null);
 
   const history = useHistory();
 
@@ -69,12 +71,14 @@ const BoardPage = () => {
       const [count1, count2] = counterWin(board, player1, player2);
 
       if (count1 === count2) {
-        alert('Draw');
+        setResult('drow');
       } else {
-        count1 > count2 ? alert('Win') : alert('Lose');
+        count1 > count2 ? setResult('win') : setResult('lose');
       }
 
-      history.push('/game/finish');
+      setTimeout(() => {
+        history.push('/game/finish');
+      }, 5000);
     }
   }, [step]);
 
@@ -137,6 +141,8 @@ const BoardPage = () => {
           </div>
         ))}
       </div>
+
+      {result && <Result type={result} />}
 
       <div className={s.playerTwo}>
         <PlayerBoard
