@@ -6,18 +6,20 @@ import PokemonCard from '../../../../components/PokemonCard';
 
 import routes from '../../../../service/routes';
 import s from './Board.module.css';
+import PlayerBoard from './components/PlayerBoard/insex';
 
 const BoardPage = () => {
   const [board, setBoard] = useState([]);
   const [player2, setPlayer2] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const { pokemons } = useContext(PokemonContext);
 
   const history = useHistory();
 
-  if (Object.keys(pokemons).length === 0) {
+  /* if (Object.keys(pokemons).length === 0) {
     history.replace('/game');
-  }
+  } */
 
   useEffect(() => {
     const getData = async () => {
@@ -37,23 +39,20 @@ const BoardPage = () => {
 
   const handleClickBoardPlate = (position) => {
     console.log('POSITION', position);
+    console.log('SELECTED CARD', selectedCard);
+  };
+
+  const handleClickCard = (card) => {
+    setSelectedCard(card);
   };
 
   return (
     <div className={s.root}>
       <div className={s.playerOne}>
-        {Object.values(pokemons).map(({ type, values, name, img, id }) => (
-          <PokemonCard
-            key={id}
-            type={type}
-            values={values}
-            name={name}
-            img={img}
-            id={id}
-            minimize={true}
-            className={s.card}
-          />
-        ))}
+        <PlayerBoard
+          cards={Object.values(pokemons)}
+          onClickCard={(card) => handleClickCard(card)}
+        />
       </div>
 
       <div className={s.board}>
@@ -71,18 +70,10 @@ const BoardPage = () => {
       </div>
 
       <div className={s.playerTwo}>
-        {player2.map(({ type, values, name, img, id }) => (
-          <PokemonCard
-            key={id}
-            type={type}
-            values={values}
-            name={name}
-            img={img}
-            id={id}
-            minimize={true}
-            className={s.card}
-          />
-        ))}
+        <PlayerBoard
+          cards={player2}
+          onClickCard={(card) => handleClickCard(card)}
+        />
       </div>
     </div>
   );
