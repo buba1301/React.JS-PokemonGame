@@ -22,6 +22,7 @@
     transform-style: preserve-3d;
     transition: .6s .1s;
     transform: rotateY(180deg);
+    cursor: pointer;
 }
 
 .pokemonCard.active {

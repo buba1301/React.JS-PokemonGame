@@ -28,18 +28,23 @@ const GamePage = () => {
   };
 
   const handleAddPlayer2Cards = (palyer2) => {
-		setPokemon((prevState) => {
-			return {
-				...prevState,
-				player2: [...palyer2]
-			}
-		})
-	};
+    setPokemon((prevState) => {
+      return {
+        ...prevState,
+        player2: [...palyer2],
+      };
+    });
+  };
+
+  const clearContext = () => {
+    setPokemon({});
+  };
 
   const contextValue = {
     pokemons,
     addPokemon: handleSelectedPokemon,
     addPlayer2Pokemons: handleAddPlayer2Cards,
+    clearContext,
   };
 
   return (
