@@ -20,7 +20,8 @@ const counterWin = (board, player1, player2) => {
 };
 
 const BoardPage = () => {
-  const { pokemons } = useContext(PokemonContext);
+  const { pokemons, addPlayer2Pokemons } = useContext(PokemonContext);
+  console.log('CONTEXT', pokemons);
 
   const [board, setBoard] = useState([]);
   const [player1, setPlayer1] = useState(() => {
@@ -51,12 +52,16 @@ const BoardPage = () => {
       const palyer2Response = await fetch(routes.getPlayer2.url);
       const palyer2Request = await palyer2Response.json();
 
+      console.log('Player2', palyer2Request.data);
+
       setPlayer2(() => {
         return palyer2Request.data.map((pokemon) => ({
           ...pokemon,
           possession: 'red',
         }));
       });
+
+      addPlayer2Pokemons(palyer2Request.data);
     };
 
     getData();
@@ -66,11 +71,12 @@ const BoardPage = () => {
     if (step === 9) {
       const [count1, count2] = counterWin(board, player1, player2);
 
-      if (count1 === count2) {
+      history.push('/game/finish');
+      /* if (count1 === count2) {
         alert('Draw');
       }
 
-      count1 > count2 ? alert('Win') : alert('Lose');
+			count1 > count2 ? alert('Win') : alert('Lose');*/
     }
   }, [step]);
 
