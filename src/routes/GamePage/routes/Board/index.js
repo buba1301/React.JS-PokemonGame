@@ -1,21 +1,36 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import PokemonCard from '../../../../components/PokemonCard';
 import { PokemonContext } from '../../../../context/pokemonContext';
+
+import PokemonCard from '../../../../components/PokemonCard';
+
+import routes from '../../../../service/routes';
 import s from './Board.module.css';
 
-const boardFields = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
 const BoardPage = () => {
+  const [board, setboard] = useState([]);
   const { pokemons } = useContext(PokemonContext);
 
   const history = useHistory();
 
-  console.log('HISTORY', history);
-
   if (Object.keys(pokemons).length === 0) {
     history.replace('/game');
   }
+
+  useEffect(() => {
+    const getBoard = async () => {
+      const boardResponse = await fetch(routes.getBoard.url);
+      const boardRequest = await boardResponse.json();
+
+      setboard(boardRequest.data);
+    };
+
+    getBoard();
+  }, []);
+
+  const handleClickBoardPlate = (position) => {
+    console.log('POSITION', position);
+  };
 
   return (
     <div className={s.root}>
@@ -35,8 +50,16 @@ const BoardPage = () => {
       </div>
 
       <div className={s.board}>
-        {boardFields.map((filedNumber) => (
-          <div className={s.boardPlate}>{filedNumber}</div>
+        {board.map(({ position, card }) => (
+          <div
+            className={s.boardPlate}
+            key={position}
+            onClick={() => !card && handleClickBoardPlate(position)}
+          >
+            {card && (
+              <PokemonCard {...card} minimize={true} className={s.card} />
+            )}
+          </div>
         ))}
       </div>
     </div>
