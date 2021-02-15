@@ -7,7 +7,7 @@ import Button from '../../../../components/Button';
 
 import s from './Start.module.css';
 
-import bg1 from './assets/bg1.jpg';
+// import bg1 from './assets/bg1.jpg';
 
 import { FireBaseContext } from '../../../../context/fireBaseContext';
 import { PokemonContext } from '../../../../context/pokemonContext';

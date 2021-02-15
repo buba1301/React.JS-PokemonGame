@@ -4,16 +4,18 @@ import PokemonCard from '../../../../../../components/PokemonCard';
 
 import s from './PlayerBoard.module.css';
 
-const PlayerBoard = ({ player, cards, onClickCard }) => {
+const PlayerBoard = ({ player, cards, onClickCard, whoseStep }) => {
   const [isSelected, setIsSelected] = useState(null);
 
   const handleClick = (card) => {
-    setIsSelected(card.id);
-    onClickCard &&
-      onClickCard({
-        ...card,
-        player,
-      });
+    if (whoseStep) {
+      setIsSelected(card.id);
+      onClickCard &&
+        onClickCard({
+          ...card,
+          player,
+        });
+    }
   };
 
   return (

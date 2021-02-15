@@ -4,10 +4,12 @@ import { PokemonContext } from '../../../../context/pokemonContext';
 
 import PokemonCard from '../../../../components/PokemonCard';
 import PlayerBoard from './components/PlayerBoard/insex';
-import Result from '../../../../components/Result';
+import Result from './components/Result';
 
 import routes from '../../../../service/routes';
 import s from './Board.module.css';
+import ArrowChoice from '../../../../components/ArrowChoice';
+import getFirstStepInGame from '../../../../utils';
 
 const counterWin = (board, player1, player2) => {
   let player1Count = player1.length;
@@ -19,6 +21,13 @@ const counterWin = (board, player1, player2) => {
 
   return [player1Count, player2Count];
 };
+
+const renderArrowChoise = (firstStep) =>
+  firstStep === 0 ? (
+    <ArrowChoice />
+  ) : (
+    <ArrowChoice stop={true} side={firstStep} />
+  );
 
 const BoardPage = () => {
   const { pokemons, addPlayer2Pokemons } = useContext(PokemonContext);
@@ -35,6 +44,7 @@ const BoardPage = () => {
   const [player2, setPlayer2] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [step, setStep] = useState(0);
+  const [whoseStep, setWhoseStep] = useState(0);
   const [result, setResult] = useState(null);
 
   const history = useHistory();
@@ -82,6 +92,14 @@ const BoardPage = () => {
     }
   }, [step]);
 
+  useEffect(() => {
+    const playerNumber = getFirstStepInGame(1, 2);
+
+    setTimeout(() => {
+      setWhoseStep(playerNumber);
+    }, 3000);
+  }, []);
+
   const filterPlayerPokemons = (prevState) =>
     prevState.filter(({ id }) => id !== selectedCard.id);
 
@@ -111,6 +129,8 @@ const BoardPage = () => {
         const count = prevState + 1;
         return count;
       });
+
+      setWhoseStep((prevState) => (prevState === 1 ? 2 : 1));
     }
   };
 
@@ -125,6 +145,7 @@ const BoardPage = () => {
           player={1}
           cards={player1}
           onClickCard={(card) => handleClickCard(card)}
+          whoseStep={whoseStep === 1}
         />
       </div>
 
@@ -142,6 +163,8 @@ const BoardPage = () => {
         ))}
       </div>
 
+      {!selectedCard && renderArrowChoise(whoseStep)}
+
       {result && <Result type={result} />}
 
       <div className={s.playerTwo}>
@@ -149,6 +172,7 @@ const BoardPage = () => {
           player={2}
           cards={player2}
           onClickCard={(card) => handleClickCard(card)}
+          whoseStep={whoseStep === 2}
         />
       </div>
     </div>
