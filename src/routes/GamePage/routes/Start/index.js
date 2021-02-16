@@ -6,12 +6,12 @@ import Button from '../../../../components/Button';
 
 import s from './Start.module.css';
 
-import { FireBaseContext } from '../../../../context/fireBaseContext';
+// import { FireBaseContext } from '../../../../context/fireBaseContext';
 import { PokemonContext } from '../../../../context/pokemonContext';
-import { asyncActions, selectors } from '../../../../slices';
+import { actions, asyncActions, selectors } from '../../../../slices';
 
 const StartPage = () => {
-  const fireBase = useContext(FireBaseContext);
+  // const fireBase = useContext(FireBaseContext);
   const pokemonContext = useContext(PokemonContext);
 
   const pokemons = useSelector(selectors.selectPokemonsData);
@@ -40,6 +40,7 @@ const StartPage = () => {
   const handleSelectedPokemon = (key) => {
     const selectedPokemon = { ...pokemonsList[key] };
     pokemonContext.addPokemon(key, selectedPokemon);
+    dispatch(actions.addSelectedPokemon({ key, selectedPokemon }));
 
     setPokemons((prevState) => {
       return {

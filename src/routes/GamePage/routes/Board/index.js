@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { PokemonContext } from '../../../../context/pokemonContext';
 
 import PokemonCard from '../../../../components/PokemonCard';
@@ -9,18 +10,8 @@ import Result from './components/Result';
 import routes from '../../../../service/routes';
 import s from './Board.module.css';
 import ArrowChoice from '../../../../components/ArrowChoice';
-import getFirstStepInGame from '../../../../utils';
-
-const counterWin = (board, player1, player2) => {
-  let player1Count = player1.length;
-  let player2Count = player2.length;
-
-  board.forEach(({ card }) => {
-    card.possession === 'blue' ? (player1Count += 1) : (player2Count += 1);
-  });
-
-  return [player1Count, player2Count];
-};
+import { counterWin, getFirstStepInGame } from '../../../../utils';
+import { asyncActions, selectors } from '../../../../slices';
 
 const renderArrowChoise = (firstStep) =>
   firstStep === 0 ? (
@@ -32,6 +23,13 @@ const renderArrowChoise = (firstStep) =>
 const BoardPage = () => {
   const { pokemons, addPlayer2Pokemons } = useContext(PokemonContext);
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  // const board = useSelector(selectors.selectGameBoard);
+  const selectedPokemons = useSelector(selectors.selectGameSelectedPokemons);
+  const player2Pokemons = useSelector(selectors.selectGamePlayer2Pokemons);
+
   const [board, setBoard] = useState([]);
   const [player1, setPlayer1] = useState(() => {
     return Object.values(pokemons).map((pokemon) => {
@@ -42,12 +40,11 @@ const BoardPage = () => {
     });
   });
   const [player2, setPlayer2] = useState([]);
+
   const [selectedCard, setSelectedCard] = useState(null);
   const [step, setStep] = useState(0);
   const [whoseStep, setWhoseStep] = useState(0);
   const [result, setResult] = useState(null);
-
-  const history = useHistory();
 
   if (Object.keys(pokemons).length === 0) {
     history.replace('/game');
@@ -60,21 +57,32 @@ const BoardPage = () => {
 
       setBoard(boardRequest.data);
 
-      const palyer2Response = await fetch(routes.getPlayer2.url);
-      const palyer2Request = await palyer2Response.json();
+      // const palyer2Response = await fetch(routes.getPlayer2.url);
+      // const palyer2Request = await palyer2Response.json();
+      dispatch(asyncActions.getBoard());
+      dispatch(asyncActions.getPlayer2Pokemons());
 
-      setPlayer2(() => {
+      /*setPlayer2(() => {
         return palyer2Request.data.map((pokemon) => ({
           ...pokemon,
           possession: 'red',
         }));
-      });
+      });*/
 
-      addPlayer2Pokemons(palyer2Request.data);
+      // addPlayer2Pokemons(palyer2Request.data);
     };
 
     getData();
   }, []);
+
+  useEffect(() => {
+    setPlayer2(() => {
+      return player2Pokemons.map((pokemon) => ({
+        ...pokemon,
+        possession: 'red',
+      }));
+    });
+  }, [player2Pokemons]);
 
   useEffect(() => {
     if (step === 9) {
