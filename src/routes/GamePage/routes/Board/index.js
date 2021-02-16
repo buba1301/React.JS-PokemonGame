@@ -11,7 +11,7 @@ import routes from '../../../../service/routes';
 import s from './Board.module.css';
 import ArrowChoice from '../../../../components/ArrowChoice';
 import { counterWin, getFirstStepInGame } from '../../../../utils';
-import { asyncActions, selectors } from '../../../../slices';
+import { actions, asyncActions, selectors } from '../../../../slices';
 
 const renderArrowChoise = (firstStep) =>
   firstStep === 0 ? (
@@ -29,6 +29,7 @@ const BoardPage = () => {
   // const board = useSelector(selectors.selectGameBoard);
   const selectedPokemons = useSelector(selectors.selectGameSelectedPokemons);
   const player2Pokemons = useSelector(selectors.selectGamePlayer2Pokemons);
+  const result = useSelector(selectors.selectGameResult);
 
   const [board, setBoard] = useState([]);
   const [player1, setPlayer1] = useState(() => {
@@ -44,7 +45,7 @@ const BoardPage = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [step, setStep] = useState(0);
   const [whoseStep, setWhoseStep] = useState(0);
-  const [result, setResult] = useState(null);
+  // const [result, setResult] = useState(null);
 
   if (Object.keys(pokemons).length === 0) {
     history.replace('/game');
@@ -59,7 +60,7 @@ const BoardPage = () => {
 
       // const palyer2Response = await fetch(routes.getPlayer2.url);
       // const palyer2Request = await palyer2Response.json();
-      dispatch(asyncActions.getBoard());
+
       dispatch(asyncActions.getPlayer2Pokemons());
 
       /*setPlayer2(() => {
@@ -89,9 +90,12 @@ const BoardPage = () => {
       const [count1, count2] = counterWin(board, player1, player2);
 
       if (count1 === count2) {
-        setResult('drow');
+        dispatch(actions.addResult('draw'));
+        // setResult('drow');
       } else {
-        count1 > count2 ? setResult('win') : setResult('lose');
+        count1 > count2
+          ? dispatch(actions.addResult('win'))
+          : dispatch(actions.addResult('lose'));
       }
 
       setTimeout(() => {

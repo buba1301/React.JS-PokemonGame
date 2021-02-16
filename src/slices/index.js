@@ -15,8 +15,10 @@ import {
   fetchPlayer2PokemonsReject,
   fetchGameData,
   getPlayer2Pokemons,
+  addResult,
   selectGameSelectedPokemons,
   selectGamePlayer2Pokemons,
+  selectGameResult,
   game,
 } from './game';
 
@@ -26,6 +28,7 @@ export const actions = {
   fetchPlayer2PokemonsReject,
   fetchPokemonsReject,
   addSelectedPokemon,
+  addResult,
   fetchGameData,
   fetchPlayer2PokemonsResolve,
 };
@@ -40,6 +43,7 @@ export const selectors = {
   selectPokemonsData,
   selectGameSelectedPokemons,
   selectGamePlayer2Pokemons,
+  selectGameResult,
 };
 
 export default combineReducers({

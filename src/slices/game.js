@@ -8,6 +8,7 @@ const slice = createSlice({
     selectedPokemons: {},
     player2Pokemons: [],
     error: null,
+    result: null,
   },
   reducers: {
     addSelectedPokemon: (state, { payload: { key, selectedPokemon } }) => {
@@ -40,6 +41,10 @@ const slice = createSlice({
       isLoading: false,
       error: payload,
     }),
+    addResult: (state, { payload }) => ({
+      ...state,
+      result: payload,
+    }),
   },
 });
 
@@ -48,11 +53,13 @@ export const {
   fetchGameData,
   fetchPlayer2PokemonsResolve,
   fetchPlayer2PokemonsReject,
+  addResult,
 } = slice.actions;
 
 export const selectGameSelectedPokemons = (state) =>
   state.game.selectedPokemons;
 export const selectGamePlayer2Pokemons = (state) => state.game.player2Pokemons;
+export const selectGameResult = (state) => state.game.result;
 
 export const getPlayer2Pokemons = () => async (dispatch) => {
   dispatch(fetchGameData());

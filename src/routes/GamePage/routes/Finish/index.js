@@ -1,13 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Button from '../../../../components/Button';
 import PokemonCard from '../../../../components/PokemonCard';
 import { FireBaseContext } from '../../../../context/fireBaseContext';
 import { PokemonContext } from '../../../../context/pokemonContext';
 
 import s from './Finish.module.css';
+import { selectors } from '../../../../slices';
 
-const renderPlayerCards = (cards, handleSelectedPokemon, winCard) => {
+const renderPlayerCards = (
+  cards,
+  handleSelectedPokemon = () => {},
+  winCard
+) => {
   return cards.map(({ type, values, name, img, id, selected }) => (
     <PokemonCard
       key={id}
@@ -30,12 +36,16 @@ const FinishPage = () => {
   const fireBase = useContext(FireBaseContext);
   const { pokemons, clearContext } = useContext(PokemonContext);
 
+  const player1SelectedCards = useSelector(
+    selectors.selectGameSelectedPokemons
+  );
+  const player2SelectedCards = useSelector(selectors.selectGamePlayer2Pokemons);
+  const result = useSelector(selectors.selectGameResult);
+
   const [player1Cards, setPlayer1Cards] = useState(() => {
-    return Object.entries(pokemons)
-      .filter(([key]) => key !== 'player2')
-      .map(([_key, value]) => value);
+    return Object.values(player1SelectedCards);
   });
-  const [player2Cards, setPlayer2Cards] = useState(pokemons.player2);
+  const [player2Cards, setPlayer2Cards] = useState(player2SelectedCards);
 
   const [winCard, setWinCard] = useState(null);
 
@@ -82,7 +92,9 @@ const FinishPage = () => {
         <Button onClick={handleClickButton}>Finish Game</Button>
       </div>
       <div className={s.player}>
-        {renderPlayerCards(player2Cards, handleSelectedPokemon, winCard)}
+        {result === 'win'
+          ? renderPlayerCards(player2Cards, handleSelectedPokemon, winCard)
+          : renderPlayerCards(player2Cards)}
       </div>
     </div>
   );
