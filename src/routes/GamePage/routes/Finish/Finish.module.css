@@ -1,0 +1,17 @@
+.root {
+	display: grid;
+	grid-template-rows: auto 100px auto;
+}
+
+.player {
+	height: 300px;
+	display: grid;
+	grid-template-columns: repeat(5, auto);
+}
+
+.buttonWrap {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

@@ -15,7 +15,6 @@ class FireBase {
     !firebase.apps.length
       ? firebase.initializeApp(firebaseConfig)
       : firebase.app();
-    // firebase.initializeApp(firebaseConfig);
 
     this.fire = firebase;
     this.database = this.fire.database();

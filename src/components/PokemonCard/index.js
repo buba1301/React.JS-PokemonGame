@@ -14,10 +14,9 @@ const PokemonCard = ({
   active,
   selected,
   minimize = false,
+  possession,
   className,
 }) => {
-  // const [isSelected, setIsSelected] = useState(false);
-
   const classNamesPokemonCard = cn(className, s.pokemonCard, {
     [s.active]: true,
     [s.selected]: selected,
@@ -27,14 +26,13 @@ const PokemonCard = ({
 
   const handleClick = () => {
     handleSelectedPokemon && handleSelectedPokemon();
-    // setIsSelected((prevState) => !prevState);
   };
 
   return (
     <div className={classNamesPokemonCard} onClick={handleClick}>
       <div className={s.cardFront}>
         <div className={cn(s.wrap, s.front)}>
-          <div className={cn(s.pokemon, s[type])}>
+          <div className={cn(s.pokemon, s[type], s[possession])}>
             <div className={s.values}>
               {valuesToArray.map(([key, value]) => {
                 return (
