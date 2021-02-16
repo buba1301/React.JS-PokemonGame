@@ -1,10 +1,29 @@
 import { combineReducers } from 'redux';
-import { pokemonActions, pokemon } from './pokemons';
+import {
+  fetchPokemons,
+  fetchPokemonsResolve,
+  fetchPokemonsReject,
+  getPokemons,
+  selectPokemonsLoading,
+  selectPokemonsData,
+  pokemons,
+} from './pokemons';
 
 export const actions = {
-  ...pokemonActions,
+  fetchPokemons,
+  fetchPokemonsResolve,
+  fetchPokemonsReject,
+};
+
+export const asyncActions = {
+  getPokemons,
+};
+
+export const selectors = {
+  selectPokemonsLoading,
+  selectPokemonsData,
 };
 
 export default combineReducers({
-  pokemon,
+  pokemons,
 });
