@@ -45,6 +45,14 @@ const slice = createSlice({
       ...state,
       result: payload,
     }),
+    clearBoard: (state) => ({
+      ...state,
+      isLoading: false,
+      selectedPokemons: {},
+      player2Pokemons: [],
+      error: null,
+      result: null,
+    }),
   },
 });
 
@@ -54,6 +62,7 @@ export const {
   fetchPlayer2PokemonsResolve,
   fetchPlayer2PokemonsReject,
   addResult,
+  clearBoard,
 } = slice.actions;
 
 export const selectGameSelectedPokemons = (state) =>

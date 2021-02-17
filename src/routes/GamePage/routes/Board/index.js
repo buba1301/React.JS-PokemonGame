@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { PokemonContext } from '../../../../context/pokemonContext';
 
 import PokemonCard from '../../../../components/PokemonCard';
 import PlayerBoard from './components/PlayerBoard/insex';
@@ -21,19 +20,16 @@ const renderArrowChoise = (firstStep) =>
   );
 
 const BoardPage = () => {
-  const { pokemons, addPlayer2Pokemons } = useContext(PokemonContext);
-
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // const board = useSelector(selectors.selectGameBoard);
   const selectedPokemons = useSelector(selectors.selectGameSelectedPokemons);
   const player2Pokemons = useSelector(selectors.selectGamePlayer2Pokemons);
   const result = useSelector(selectors.selectGameResult);
 
   const [board, setBoard] = useState([]);
   const [player1, setPlayer1] = useState(() => {
-    return Object.values(pokemons).map((pokemon) => {
+    return Object.values(selectedPokemons).map((pokemon) => {
       return {
         ...pokemon,
         possession: 'blue',
@@ -45,9 +41,8 @@ const BoardPage = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [step, setStep] = useState(0);
   const [whoseStep, setWhoseStep] = useState(0);
-  // const [result, setResult] = useState(null);
 
-  if (Object.keys(pokemons).length === 0) {
+  if (Object.keys(selectedPokemons).length === 0) {
     history.replace('/game');
   }
 
@@ -58,19 +53,7 @@ const BoardPage = () => {
 
       setBoard(boardRequest.data);
 
-      // const palyer2Response = await fetch(routes.getPlayer2.url);
-      // const palyer2Request = await palyer2Response.json();
-
       dispatch(asyncActions.getPlayer2Pokemons());
-
-      /*setPlayer2(() => {
-        return palyer2Request.data.map((pokemon) => ({
-          ...pokemon,
-          possession: 'red',
-        }));
-      });*/
-
-      // addPlayer2Pokemons(palyer2Request.data);
     };
 
     getData();
@@ -91,7 +74,6 @@ const BoardPage = () => {
 
       if (count1 === count2) {
         dispatch(actions.addResult('draw'));
-        // setResult('drow');
       } else {
         count1 > count2
           ? dispatch(actions.addResult('win'))

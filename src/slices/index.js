@@ -16,6 +16,7 @@ import {
   fetchGameData,
   getPlayer2Pokemons,
   addResult,
+  clearBoard,
   selectGameSelectedPokemons,
   selectGamePlayer2Pokemons,
   selectGameResult,
@@ -29,6 +30,7 @@ export const actions = {
   fetchPokemonsReject,
   addSelectedPokemon,
   addResult,
+  clearBoard,
   fetchGameData,
   fetchPlayer2PokemonsResolve,
 };

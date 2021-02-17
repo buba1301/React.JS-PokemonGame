@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Button from '../../../../components/Button';
 import PokemonCard from '../../../../components/PokemonCard';
 import { FireBaseContext } from '../../../../context/fireBaseContext';
-import { PokemonContext } from '../../../../context/pokemonContext';
 
 import s from './Finish.module.css';
-import { selectors } from '../../../../slices';
+import { actions, selectors } from '../../../../slices';
 
 const renderPlayerCards = (
   cards,
@@ -34,7 +33,6 @@ const renderPlayerCards = (
 
 const FinishPage = () => {
   const fireBase = useContext(FireBaseContext);
-  const { pokemons, clearContext } = useContext(PokemonContext);
 
   const player1SelectedCards = useSelector(
     selectors.selectGameSelectedPokemons
@@ -42,9 +40,7 @@ const FinishPage = () => {
   const player2SelectedCards = useSelector(selectors.selectGamePlayer2Pokemons);
   const result = useSelector(selectors.selectGameResult);
 
-  const [player1Cards, setPlayer1Cards] = useState(() => {
-    return Object.values(player1SelectedCards);
-  });
+  const [player1Cards] = useState(Object.values(player1SelectedCards));
   const [player2Cards, setPlayer2Cards] = useState(player2SelectedCards);
 
   const [winCard, setWinCard] = useState(null);
@@ -75,14 +71,14 @@ const FinishPage = () => {
   };
 
   const handleClickButton = async () => {
-    clearContext();
+    actions.clearBoard();
     const data = winCard;
     data.selected = false;
     await fireBase.addPokemon(data, () => {});
     history.push('/game');
   };
 
-  if (Object.keys(pokemons).length === 0) {
+  if (Object.keys(player1SelectedCards).length === 0) {
     history.replace('/game');
   }
   return (
