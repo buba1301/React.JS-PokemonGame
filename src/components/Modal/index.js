@@ -1,21 +1,30 @@
+import { useRef } from 'react';
 import cn from 'classnames';
 
 import s from './Modal.module.css';
 
 const Modal = ({ title, children, isOpen, onClickClose }) => {
+  const modalEL = useRef();
+
   const handleCloseModal = () => {
     onClickClose && onClickClose();
   };
+
+  const handleClickRoot = (event) => {
+    !modalEL.current.contains(event.target) && handleCloseModal();
+  };
+
   return (
     <div
-      class={cn(s.root, {
+      className={cn(s.root, {
         [s.open]: isOpen,
       })}
+      onClick={handleClickRoot}
     >
-      <div class={s.modal}>
-        <div class={s.head}>
+      <div className={s.modal} ref={modalEL}>
+        <div className={s.head}>
           {title}
-          <span class={s.btnClose} onClick={handleCloseModal}></span>
+          <span className={s.btnClose} onClick={handleCloseModal}></span>
         </div>
         <div className={s.content}>{children}</div>
       </div>
