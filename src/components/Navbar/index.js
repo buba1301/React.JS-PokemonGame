@@ -1,7 +1,8 @@
 import cn from 'classnames';
 import s from './NavBar.module.css';
 
-import { ReactComponent as LoginSVG } from '../../assets/login.svg';
+import { ReactComponent as LogoSvg } from '../../assets/Logo.svg';
+import { ReactComponent as LoginSvg } from '../../assets/login.svg';
 
 const NavBar = ({
   handleOpenCloseMenu,
@@ -19,10 +20,12 @@ const NavBar = ({
   return (
     <nav id={s.navbar} className={navClassNames}>
       <div className={s.navWrapper}>
-        <p className={s.brand}>LOGO</p>
+        <p className={s.brand}>
+          <LogoSvg />
+        </p>
         <div className={s.loginAndMenu}>
           <div className={s.loginWrap} onClick={onClickLogin}>
-            <LoginSVG />
+            <LoginSvg />
           </div>
           <div className={buttonClassNames} onClick={handleClick}>
             <span />
