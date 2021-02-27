@@ -10,7 +10,7 @@ import ContactPage from './routes/ContactPage';
 
 import s from './App.module.css';
 import { FireBaseContext } from './context/fireBaseContext';
-import FireBase from './service/firebase';
+import fireBaseClass from './service/firebase';
 
 const App = () => {
   const location = useLocation();
@@ -21,7 +21,7 @@ const App = () => {
   const wrapClassNames = cn(s.wrap, { [s.isHomePage]: isPadding });
 
   return (
-    <FireBaseContext.Provider value={new FireBase()}>
+    <FireBaseContext.Provider value={fireBaseClass}>
       <Switch>
         <Route path={'/404'} component={NotFound} />
         <Route>
