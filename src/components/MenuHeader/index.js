@@ -3,10 +3,11 @@ import { useState } from 'react';
 import Menu from '../Menu';
 import Modal from '../Modal';
 import NavBar from '../Navbar';
+import LoginForm from '../LoginForm';
 
 const MenuHeader = ({ bgActive }) => {
   const [isActiveMenu, setActiveMenu] = useState(null);
-  const [isOpenModal, setOpenModal] = useState(false);
+  const [isOpenModal, setOpenModal] = useState(true);
 
   const handleOpenCloseMenu = () => {
     setActiveMenu((prevState) => {
@@ -16,6 +17,10 @@ const MenuHeader = ({ bgActive }) => {
 
   const handleClickLogin = () => {
     setOpenModal((prevState) => !prevState);
+  };
+
+  const handleSubmitLoginForm = (values) => {
+    console.log('FORM VALUES', values);
   };
 
   return (
@@ -35,7 +40,7 @@ const MenuHeader = ({ bgActive }) => {
         isOpen={isOpenModal}
         onClickClose={handleClickLogin}
       >
-        It is logi from
+        <LoginForm onSubmit={handleSubmitLoginForm} />
       </Modal>
     </>
   );
