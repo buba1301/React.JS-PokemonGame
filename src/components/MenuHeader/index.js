@@ -36,7 +36,7 @@ const MenuHeader = ({ bgActive }) => {
         onClickLogin={handleClickLogin}
       />
       <Modal
-        title='Login for game...'
+        title='Auth...'
         isOpen={isOpenModal}
         onClickClose={handleClickLogin}
       >

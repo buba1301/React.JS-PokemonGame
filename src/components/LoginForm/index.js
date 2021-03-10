@@ -2,9 +2,12 @@ import { useState } from 'react';
 import Button from '../Button';
 import Input from '../Input';
 
+import s from './LoginForm.module.css';
+
 const LoginForm = ({ onSubmit }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSignIn, setSignIn] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +20,10 @@ const LoginForm = ({ onSubmit }) => {
     setPassword('');
   };
 
+  const handleChangeFormType = () => {
+    setSignIn((prevState) => !prevState);
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Input name='email' label='Email' value={email} onChange={setEmail} />
@@ -27,7 +34,16 @@ const LoginForm = ({ onSubmit }) => {
         value={password}
         onChange={setPassword}
       />
-      <Button>Submit</Button>
+      <div className={s.buttonsContainer}>
+        <Button type='submit'>{isSignIn ? 'SignIn' : 'SignUp'}</Button>
+        <a
+          href='#href'
+          className={s.changeFormButton}
+          onClick={handleChangeFormType}
+        >
+          {isSignIn ? 'Registration?' : 'Login?'}
+        </a>
+      </div>
     </form>
   );
 };

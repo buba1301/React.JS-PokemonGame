@@ -1,8 +1,9 @@
 .button {
-    font-size: 28px;
+    width: 152px;
+    font-size: 26px;
     font-weight: normal;
     font-style: italic;
-    color: #0f0e0e;
+    color: rgb(12, 11, 11);
     line-height: 32px;
     cursor: pointer;
     border-radius: 5px;
