@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { NotificationManager } from 'react-notifications';
 
 import Menu from '../Menu';
 import Modal from '../Modal';
@@ -39,6 +40,11 @@ const MenuHeader = ({ bgActive }) => {
     const responce = await fetch(url, reqOptions).then((res) => res.json());
 
     console.log('SIGNIN', responce);
+    if (responce.hasOwnProperty('error')) {
+      NotificationManager.error(responce.error.message, 'Wrong!');
+    } else {
+      NotificationManager.success('Success!');
+    }
   };
 
   return (
