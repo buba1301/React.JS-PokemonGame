@@ -2,6 +2,7 @@ import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import { NotificationContainer } from 'react-notifications';
 
+import PrivateRoute from './components/PrivateRoute';
 import GamePage from './routes/GamePage';
 import HomePage from './routes/HomePage';
 import AboutPage from './routes/AboutPage';
@@ -34,8 +35,8 @@ const App = () => {
             <div className={wrapClassNames}>
               <Switch>
                 <Route exact path='/' component={HomePage} />
-                <Route path='/game' component={GamePage} />
-                <Route path='/about' component={AboutPage} />
+                <PrivateRoute path='/game' component={GamePage} />
+                <PrivateRoute path='/about' component={AboutPage} />
                 <Route path='/contact' component={ContactPage} />
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>

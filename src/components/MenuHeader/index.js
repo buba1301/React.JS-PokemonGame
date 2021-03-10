@@ -10,7 +10,7 @@ import apiRoutes from '../../api';
 
 const MenuHeader = ({ bgActive }) => {
   const [isActiveMenu, setActiveMenu] = useState(null);
-  const [isOpenModal, setOpenModal] = useState(true);
+  const [isOpenModal, setOpenModal] = useState(false);
   const [isSignIn, setSignIn] = useState(true);
 
   const handleOpenCloseMenu = () => {
@@ -43,7 +43,9 @@ const MenuHeader = ({ bgActive }) => {
     if (responce.hasOwnProperty('error')) {
       NotificationManager.error(responce.error.message, 'Wrong!');
     } else {
+      localStorage.setItem('idToken', responce.idToken);
       NotificationManager.success('Success!');
+      setOpenModal((prevState) => !prevState);
     }
   };
 
