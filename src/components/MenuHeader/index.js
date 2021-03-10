@@ -5,9 +5,12 @@ import Modal from '../Modal';
 import NavBar from '../Navbar';
 import LoginForm from '../LoginForm';
 
+import apiRoutes from '../../api';
+
 const MenuHeader = ({ bgActive }) => {
   const [isActiveMenu, setActiveMenu] = useState(null);
   const [isOpenModal, setOpenModal] = useState(true);
+  const [isSignIn, setSignIn] = useState(true);
 
   const handleOpenCloseMenu = () => {
     setActiveMenu((prevState) => {
@@ -19,8 +22,23 @@ const MenuHeader = ({ bgActive }) => {
     setOpenModal((prevState) => !prevState);
   };
 
-  const handleSubmitLoginForm = (values) => {
-    console.log('FORM VALUES', values);
+  const handleChangeFormType = () => {
+    setSignIn((prevState) => !prevState);
+  };
+
+  const handleSubmitLoginForm = async ({ email, password }) => {
+    const url = isSignIn ? apiRoutes.signIn.url : apiRoutes.signUp.url;
+    const reqOptions = {
+      method: isSignIn ? apiRoutes.signIn.method : apiRoutes.signUp.method,
+      body: JSON.stringify({
+        email,
+        password,
+        returnSequreToken: true,
+      }),
+    };
+    const responce = await fetch(url, reqOptions).then((res) => res.json());
+
+    console.log('SIGNIN', responce);
   };
 
   return (
@@ -40,7 +58,11 @@ const MenuHeader = ({ bgActive }) => {
         isOpen={isOpenModal}
         onClickClose={handleClickLogin}
       >
-        <LoginForm onSubmit={handleSubmitLoginForm} />
+        <LoginForm
+          onSubmit={handleSubmitLoginForm}
+          onClick={handleChangeFormType}
+          isSignIn={isSignIn}
+        />
       </Modal>
     </>
   );
