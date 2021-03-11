@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '../Button';
 import Input from '../Input';
 
 import s from './LoginForm.module.css';
 
-const LoginForm = ({ onSubmit, onClick, isSignIn }) => {
+const LoginForm = ({ onSubmit, onClick, isSignIn, isResetForm }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    setEmail('');
+    setPassword('');
+  }, [isResetForm]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

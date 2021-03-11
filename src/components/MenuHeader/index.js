@@ -67,6 +67,7 @@ const MenuHeader = ({ bgActive }) => {
         onClickClose={handleClickLogin}
       >
         <LoginForm
+          isResetForm={!isOpenModal}
           onSubmit={handleSubmitLoginForm}
           onClick={handleChangeFormType}
           isSignIn={isSignIn}
