@@ -4,9 +4,10 @@ import Input from '../Input';
 
 import s from './LoginForm.module.css';
 
-const LoginForm = ({ onSubmit, onClick, isSignIn, isResetForm }) => {
+const LoginForm = ({ onSubmit, isResetForm }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSignIn, setSignIn] = useState(true);
 
   useEffect(() => {
     setEmail('');
@@ -17,6 +18,7 @@ const LoginForm = ({ onSubmit, onClick, isSignIn, isResetForm }) => {
     e.preventDefault();
     onSubmit &&
       onSubmit({
+        type: isSignIn ? 'signIn' : 'signUp',
         email,
         password,
       });
@@ -24,8 +26,8 @@ const LoginForm = ({ onSubmit, onClick, isSignIn, isResetForm }) => {
     setPassword('');
   };
 
-  const handleClick = () => {
-    onClick && onClick();
+  const handleChangeFormType = () => {
+    setSignIn((prevState) => !prevState);
   };
 
   return (
@@ -40,7 +42,11 @@ const LoginForm = ({ onSubmit, onClick, isSignIn, isResetForm }) => {
       />
       <div className={s.buttonsContainer}>
         <Button type='submit'>{isSignIn ? 'SignIn' : 'SignUp'}</Button>
-        <a href='#href' className={s.changeFormButton} onClick={handleClick}>
+        <a
+          href='#href'
+          className={s.changeFormButton}
+          onClick={handleChangeFormType}
+        >
           {isSignIn ? 'Registration?' : 'Login?'}
         </a>
       </div>

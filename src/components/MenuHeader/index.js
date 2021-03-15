@@ -8,10 +8,24 @@ import LoginForm from '../LoginForm';
 
 import apiRoutes from '../../api';
 
+const logiSignUpUser = async ({ email, password, type }) => {
+  const url = apiRoutes[type].url;
+
+  const reqOptions = {
+    method: apiRoutes[type].method,
+    body: JSON.stringify({
+      email,
+      password,
+      returnSequreToken: true,
+    }),
+  };
+
+  return await fetch(url, reqOptions).then((res) => res.json());
+};
+
 const MenuHeader = ({ bgActive }) => {
   const [isActiveMenu, setActiveMenu] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
-  const [isSignIn, setSignIn] = useState(true);
 
   const handleOpenCloseMenu = () => {
     setActiveMenu((prevState) => {
@@ -23,27 +37,14 @@ const MenuHeader = ({ bgActive }) => {
     setOpenModal((prevState) => !prevState);
   };
 
-  const handleChangeFormType = () => {
-    setSignIn((prevState) => !prevState);
-  };
+  const handleSubmitLoginForm = async (props) => {
+    const response = await logiSignUpUser(props);
+    console.log('resp', response);
 
-  const handleSubmitLoginForm = async ({ email, password }) => {
-    const url = isSignIn ? apiRoutes.signIn.url : apiRoutes.signUp.url;
-    const reqOptions = {
-      method: isSignIn ? apiRoutes.signIn.method : apiRoutes.signUp.method,
-      body: JSON.stringify({
-        email,
-        password,
-        returnSequreToken: true,
-      }),
-    };
-    const responce = await fetch(url, reqOptions).then((res) => res.json());
-
-    console.log('SIGNIN', responce);
-    if (responce.hasOwnProperty('error')) {
-      NotificationManager.error(responce.error.message, 'Wrong!');
+    if (response.hasOwnProperty('error')) {
+      NotificationManager.error(response.error.message, 'Wrong!');
     } else {
-      localStorage.setItem('idToken', responce.idToken);
+      localStorage.setItem('idToken', response.idToken);
       NotificationManager.success('Success!');
       setOpenModal((prevState) => !prevState);
     }
@@ -69,8 +70,6 @@ const MenuHeader = ({ bgActive }) => {
         <LoginForm
           isResetForm={!isOpenModal}
           onSubmit={handleSubmitLoginForm}
-          onClick={handleChangeFormType}
-          isSignIn={isSignIn}
         />
       </Modal>
     </>
