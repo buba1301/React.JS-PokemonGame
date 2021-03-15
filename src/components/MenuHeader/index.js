@@ -39,8 +39,24 @@ const MenuHeader = ({ bgActive }) => {
 
   const handleSubmitLoginForm = async (props) => {
     const response = await logiSignUpUser(props);
-    console.log('resp', response);
 
+    if (props.type === 'signUp') {
+      const startUserPokemons = await fetch(
+        apiRoutes.getStartPokemons.url
+      ).then((res) => res.json());
+
+      console.log('Stat pokemons', startUserPokemons);
+
+      startUserPokemons.data.forEach(async (item) => {
+        await fetch(
+          `${apiRoutes.addPlayerWithStartPokemons.url}/${response.localId}/pokemons.json?auth=${response.idToken}`,
+          {
+            method: apiRoutes.addPlayerWithStartPokemons.method,
+            body: JSON.stringify(item),
+          }
+        );
+      });
+    }
     if (response.hasOwnProperty('error')) {
       NotificationManager.error(response.error.message, 'Wrong!');
     } else {

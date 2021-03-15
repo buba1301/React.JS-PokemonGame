@@ -9,6 +9,14 @@ const apiRoutes = {
     method: 'POST',
     url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${APIKey}`,
   },
+  getStartPokemons: {
+    method: 'GET',
+    url: 'https://reactmarathon-api.herokuapp.com/api/pokemons/starter',
+  },
+  addPlayerWithStartPokemons: {
+    method: 'POST',
+    url: 'https://pokemon-game-5e47a-default-rtdb.firebaseio.com',
+  },
 };
 
 export default apiRoutes;
