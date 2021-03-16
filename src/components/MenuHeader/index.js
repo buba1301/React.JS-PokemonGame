@@ -23,6 +23,18 @@ const logiSignUpUser = async ({ email, password, type }) => {
   return await fetch(url, reqOptions).then((res) => res.json());
 };
 
+const addPokemonsInDatabase = (data, user) => {
+  data.forEach(async (item) => {
+    await fetch(
+      `${apiRoutes.addPlayerWithStartPokemons.url}/${user.localId}/pokemons.json?auth=${user.idToken}`,
+      {
+        method: apiRoutes.addPlayerWithStartPokemons.method,
+        body: JSON.stringify(item),
+      }
+    );
+  });
+};
+
 const MenuHeader = ({ bgActive }) => {
   const [isActiveMenu, setActiveMenu] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
@@ -38,29 +50,20 @@ const MenuHeader = ({ bgActive }) => {
   };
 
   const handleSubmitLoginForm = async (props) => {
-    const response = await logiSignUpUser(props);
+    const user = await logiSignUpUser(props);
 
     if (props.type === 'signUp') {
       const startUserPokemons = await fetch(
         apiRoutes.getStartPokemons.url
       ).then((res) => res.json());
 
-      console.log('Stat pokemons', startUserPokemons);
-
-      startUserPokemons.data.forEach(async (item) => {
-        await fetch(
-          `${apiRoutes.addPlayerWithStartPokemons.url}/${response.localId}/pokemons.json?auth=${response.idToken}`,
-          {
-            method: apiRoutes.addPlayerWithStartPokemons.method,
-            body: JSON.stringify(item),
-          }
-        );
-      });
+      addPokemonsInDatabase(startUserPokemons.data, user);
     }
-    if (response.hasOwnProperty('error')) {
-      NotificationManager.error(response.error.message, 'Wrong!');
+
+    if (user.hasOwnProperty('error')) {
+      NotificationManager.error(user.error.message, 'Wrong!');
     } else {
-      localStorage.setItem('idToken', response.idToken);
+      localStorage.setItem('idToken', user.idToken);
       NotificationManager.success('Success!');
       setOpenModal((prevState) => !prevState);
     }

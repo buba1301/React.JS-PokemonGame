@@ -9,6 +9,10 @@ const apiRoutes = {
     method: 'POST',
     url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${APIKey}`,
   },
+  getUser: {
+    method: 'POST',
+    url: `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${APIKey}`,
+  },
   getStartPokemons: {
     method: 'GET',
     url: 'https://reactmarathon-api.herokuapp.com/api/pokemons/starter',

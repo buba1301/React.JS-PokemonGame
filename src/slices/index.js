@@ -23,6 +23,16 @@ import {
   game,
 } from './game';
 
+import {
+  fetchUser,
+  updateUser,
+  removeUser,
+  selectUserFetch,
+  selectUser,
+  getUserAsync,
+  user,
+} from './user';
+
 export const actions = {
   fetchPokemons,
   fetchPokemonsResolve,
@@ -33,11 +43,15 @@ export const actions = {
   clearBoard,
   fetchGameData,
   fetchPlayer2PokemonsResolve,
+  fetchUser,
+  updateUser,
+  removeUser,
 };
 
 export const asyncActions = {
   getPokemons,
   getPlayer2Pokemons,
+  getUserAsync,
 };
 
 export const selectors = {
@@ -46,9 +60,12 @@ export const selectors = {
   selectGameSelectedPokemons,
   selectGamePlayer2Pokemons,
   selectGameResult,
+  selectUserFetch,
+  selectUser,
 };
 
 export default combineReducers({
   pokemons,
   game,
+  user,
 });

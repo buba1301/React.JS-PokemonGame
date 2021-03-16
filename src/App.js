@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import { NotificationContainer } from 'react-notifications';
+import { asyncActions } from './slices';
 
 import PrivateRoute from './components/PrivateRoute';
 import GamePage from './routes/GamePage';
@@ -19,11 +22,16 @@ import fireBaseClass from './service/firebase';
 
 const App = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const isPadding =
     location.pathname === '/' || location.pathname === '/game/board';
 
   const wrapClassNames = cn(s.wrap, { [s.isHomePage]: isPadding });
+
+  useEffect(() => {
+    dispatch(asyncActions.getUserAsync());
+  }, []);
 
   return (
     <FireBaseContext.Provider value={fireBaseClass}>
