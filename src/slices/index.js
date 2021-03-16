@@ -29,6 +29,7 @@ import {
   removeUser,
   selectUserFetch,
   selectUser,
+  selectUserLocalId,
   getUserAsync,
   user,
 } from './user';
@@ -62,6 +63,7 @@ export const selectors = {
   selectGameResult,
   selectUserFetch,
   selectUser,
+  selectUserLocalId,
 };
 
 export default combineReducers({

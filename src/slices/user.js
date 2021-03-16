@@ -26,6 +26,7 @@ export const { fetchUser, updateUser, removeUser } = slice.actions;
 
 export const selectUserFetch = (state) => state.user.isLoading;
 export const selectUser = (state) => state.user.data;
+export const selectUserLocalId = (state) => state.user.data?.localId;
 
 export const getUserAsync = () => async (dispatch) => {
   const idToken = localStorage.getItem('idToken');
