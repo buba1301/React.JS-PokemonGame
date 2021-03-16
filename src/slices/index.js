@@ -30,6 +30,7 @@ import {
   selectUserFetch,
   selectUser,
   selectUserLocalId,
+  getUserUpdateAsync,
   getUserAsync,
   user,
 } from './user';
@@ -53,6 +54,7 @@ export const asyncActions = {
   getPokemons,
   getPlayer2Pokemons,
   getUserAsync,
+  getUserUpdateAsync,
 };
 
 export const selectors = {

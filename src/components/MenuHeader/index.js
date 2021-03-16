@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { NotificationManager } from 'react-notifications';
 
 import Menu from '../Menu';
@@ -7,6 +8,7 @@ import NavBar from '../Navbar';
 import LoginForm from '../LoginForm';
 
 import apiRoutes from '../../api';
+import { asyncActions } from '../../slices';
 
 const logiSignUpUser = async ({ email, password, type }) => {
   const url = apiRoutes[type].url;
@@ -39,6 +41,8 @@ const MenuHeader = ({ bgActive }) => {
   const [isActiveMenu, setActiveMenu] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleOpenCloseMenu = () => {
     setActiveMenu((prevState) => {
       return !prevState;
@@ -65,6 +69,7 @@ const MenuHeader = ({ bgActive }) => {
     } else {
       localStorage.setItem('idToken', user.idToken);
       NotificationManager.success('Success!');
+      dispatch(asyncActions.getUserUpdateAsync());
       setOpenModal((prevState) => !prevState);
     }
   };

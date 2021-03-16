@@ -47,7 +47,6 @@ export const getPokemons = () => async (dispatch, getState) => {
       res.json()
     );
     dispatch(fetchPokemonsResolve(data));
-    console.log('POKEMONS', data);
   } catch (e) {
     dispatch(fetchPokemonsReject(e));
   }
