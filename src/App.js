@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 import { NotificationContainer } from 'react-notifications';
-import { asyncActions } from './slices';
+import { asyncActions, selectors } from './slices';
 
 import PrivateRoute from './components/PrivateRoute';
 import GamePage from './routes/GamePage';
@@ -21,6 +21,7 @@ import { FireBaseContext } from './context/fireBaseContext';
 import fireBaseClass from './service/firebase';
 
 const App = () => {
+  const isUserLoading = useSelector(selectors.selectUserFetch);
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -32,6 +33,11 @@ const App = () => {
   useEffect(() => {
     dispatch(asyncActions.getUserAsync());
   }, []);
+  console.log('LOADING', isUserLoading);
+
+  if (isUserLoading) {
+    return 'Loading...';
+  }
 
   return (
     <FireBaseContext.Provider value={fireBaseClass}>

@@ -4,7 +4,7 @@ import apiRoutes from '../api';
 const slice = createSlice({
   name: 'user',
   initialState: {
-    isLoading: false,
+    isLoading: true,
     data: {},
   },
   reducers: {

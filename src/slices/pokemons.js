@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { selectors } from '.';
+import apiRoutes from '../api';
 import fireBaseClass from '../service/firebase';
 
 const slice = createSlice({
@@ -36,12 +38,16 @@ export const {
 export const selectPokemonsLoading = (state) => state.pokemons.isLoading;
 export const selectPokemonsData = (state) => state.pokemons.data;
 
-export const getPokemons = () => async (dispatch) => {
+export const getPokemons = () => async (dispatch, getState) => {
+  const localId = selectors.selectUserLocalId(getState());
   dispatch(fetchPokemons());
 
   try {
-    const data = await fireBaseClass.getPokemonsOnce();
+    const data = await fetch(apiRoutes.getPokemons.url(localId)).then((res) =>
+      res.json()
+    );
     dispatch(fetchPokemonsResolve(data));
+    console.log('POKEMONS', data);
   } catch (e) {
     dispatch(fetchPokemonsReject(e));
   }
