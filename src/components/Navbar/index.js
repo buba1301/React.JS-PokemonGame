@@ -13,6 +13,7 @@ const NavBar = ({
   isActiveMenu,
   bgActive = false,
   onClickLogin,
+  onClickUserIcon,
 }) => {
   const isLoading = useSelector(selectors.selectUserFetch);
   const localId = useSelector(selectors.selectUserLocalId);
@@ -37,7 +38,7 @@ const NavBar = ({
             </div>
           )}
           {!isLoading && localId && (
-            <div className={s.loginWrap} onClick={onClickLogin}>
+            <div className={s.loginWrap} onClick={onClickUserIcon}>
               <UserSvg />
             </div>
           )}

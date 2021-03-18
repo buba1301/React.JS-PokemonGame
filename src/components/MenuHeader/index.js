@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 import { NotificationManager } from 'react-notifications';
 
 import Menu from '../Menu';
@@ -43,6 +44,8 @@ const MenuHeader = ({ bgActive }) => {
 
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const handleOpenCloseMenu = () => {
     setActiveMenu((prevState) => {
       return !prevState;
@@ -53,10 +56,12 @@ const MenuHeader = ({ bgActive }) => {
     setOpenModal((prevState) => !prevState);
   };
 
+  const handleClickUserIcon = () => {
+    history.push('/user');
+  };
+
   const handleSubmitLoginForm = async (props) => {
     const user = await logiSignUpUser(props);
-
-    console.log('POKEUSER', user);
 
     if (props.type === 'signUp') {
       const startUserPokemons = await fetch(
@@ -87,6 +92,7 @@ const MenuHeader = ({ bgActive }) => {
         isActiveMenu={isActiveMenu}
         bgActive={bgActive}
         onClickLogin={handleClickLogin}
+        onClickUserIcon={handleClickUserIcon}
       />
       <Modal
         title='Auth...'

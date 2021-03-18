@@ -13,6 +13,7 @@ import NotFound from './routes/NotFound';
 import MenuHeader from './components/MenuHeader';
 import Footer from './components/Footer';
 import ContactPage from './routes/ContactPage';
+import UserPage from './routes/UserPage';
 
 import s from './App.module.css';
 import 'react-notifications/lib/notifications.css';
@@ -51,6 +52,7 @@ const App = () => {
                 <PrivateRoute path='/game' component={GamePage} />
                 <PrivateRoute path='/about' component={AboutPage} />
                 <Route path='/contact' component={ContactPage} />
+                <Route path='/user' component={UserPage} />
                 <Route render={() => <Redirect to='/404' />} />
               </Switch>
             </div>

@@ -11,14 +11,11 @@ import apiRoutes from '../../../../api';
 
 const StartPage = () => {
   const pokemons = useSelector(selectors.selectPokemonsData);
-  const user = useSelector(selectors.selectUser);
   const selectedPokemons = useSelector(selectors.selectGameSelectedPokemons);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
-
-  const idToken = localStorage.getItem('idToken');
 
   const [pokemonsList, setPokemons] = useState({});
 
