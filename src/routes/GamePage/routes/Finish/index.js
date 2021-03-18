@@ -1,12 +1,13 @@
 import { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '../../../../components/Button';
 import PokemonCard from '../../../../components/PokemonCard';
 import { FireBaseContext } from '../../../../context/fireBaseContext';
 
 import s from './Finish.module.css';
 import { actions, selectors } from '../../../../slices';
+import apiRoutes from '../../../../api';
 
 const renderPlayerCards = (
   cards,
@@ -32,8 +33,10 @@ const renderPlayerCards = (
 };
 
 const FinishPage = () => {
+  const dispatch = useDispatch();
   const fireBase = useContext(FireBaseContext);
 
+  const user = useSelector(selectors.selectUser);
   const player1SelectedCards = useSelector(
     selectors.selectGameSelectedPokemons
   );
@@ -71,10 +74,30 @@ const FinishPage = () => {
   };
 
   const handleClickButton = async () => {
-    actions.clearBoard();
-    const data = winCard;
-    data.selected = false;
-    await fireBase.addPokemon(data, () => {});
+    dispatch(actions.clearBoard());
+
+    if (result === 'win') {
+      const data = winCard;
+      const idToken = localStorage.getItem('idToken');
+
+      console.log('User', data);
+      console.log('User', user.localId);
+      console.log('User', idToken);
+      console.log(
+        'User',
+        `${apiRoutes.addPlayerWithStartPokemons.url}/${user.localId}/pokemons.json?auth=${idToken}`
+      );
+      console.log('User', apiRoutes.addPlayerWithStartPokemons.method);
+      data.selected = false;
+
+      await fetch(
+        `${apiRoutes.addPlayerWithStartPokemons.url}/${user.localId}/pokemons.json`,
+        {
+          method: apiRoutes.addPlayerWithStartPokemons.method,
+          body: JSON.stringify(data),
+        }
+      );
+    }
     history.push('/game');
   };
 

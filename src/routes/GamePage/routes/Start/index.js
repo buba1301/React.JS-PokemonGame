@@ -7,14 +7,18 @@ import Button from '../../../../components/Button';
 import s from './Start.module.css';
 
 import { actions, asyncActions, selectors } from '../../../../slices';
+import apiRoutes from '../../../../api';
 
 const StartPage = () => {
   const pokemons = useSelector(selectors.selectPokemonsData);
+  const user = useSelector(selectors.selectUser);
   const selectedPokemons = useSelector(selectors.selectGameSelectedPokemons);
 
   const dispatch = useDispatch();
 
   const history = useHistory();
+
+  const idToken = localStorage.getItem('idToken');
 
   const [pokemonsList, setPokemons] = useState({});
 
@@ -43,7 +47,7 @@ const StartPage = () => {
     });
   };
 
-  const handleOpenBoard = () => {
+  const handleOpenBoard = async () => {
     history.push('/game/board');
   };
 

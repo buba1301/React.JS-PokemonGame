@@ -56,6 +56,8 @@ const MenuHeader = ({ bgActive }) => {
   const handleSubmitLoginForm = async (props) => {
     const user = await logiSignUpUser(props);
 
+    console.log('POKEUSER', user);
+
     if (props.type === 'signUp') {
       const startUserPokemons = await fetch(
         apiRoutes.getStartPokemons.url

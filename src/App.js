@@ -33,7 +33,6 @@ const App = () => {
   useEffect(() => {
     dispatch(asyncActions.getUserAsync());
   }, []);
-  console.log('LOADING', isUserLoading);
 
   if (isUserLoading) {
     return 'Loading...';
