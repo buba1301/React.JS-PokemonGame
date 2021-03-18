@@ -8,9 +8,12 @@ import { ReactComponent as LogoSvg } from '../../assets/Logo.svg';
 import { ReactComponent as LoginSvg } from '../../assets/login.svg';
 import { ReactComponent as UserSvg } from '../../assets/user.svg';
 
+import LoginUserDropDownMenu from '../LoginUserDropDownMenu';
+
 const NavBar = ({
   handleOpenCloseMenu,
   isActiveMenu,
+  isOpenDropDownMenu,
   bgActive = false,
   onClickLogin,
   onClickUserIcon,
@@ -41,6 +44,9 @@ const NavBar = ({
             <div className={s.loginWrap} onClick={onClickUserIcon}>
               <UserSvg />
             </div>
+          )}
+          {isOpenDropDownMenu && (
+            <LoginUserDropDownMenu onClick={onClickUserIcon} />
           )}
           <div className={buttonClassNames} onClick={handleClick}>
             <span />

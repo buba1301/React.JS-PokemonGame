@@ -11,8 +11,6 @@ const Menu = ({ isActiveMenu, handleOpenCloseMenu }) => {
   });
 
   const handleClick = (e) => {
-    console.log('MENU', e.target);
-
     handleOpenCloseMenu && handleOpenCloseMenu();
   };
 

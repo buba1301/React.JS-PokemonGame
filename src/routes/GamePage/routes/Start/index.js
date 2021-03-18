@@ -7,7 +7,6 @@ import Button from '../../../../components/Button';
 import s from './Start.module.css';
 
 import { actions, asyncActions, selectors } from '../../../../slices';
-import apiRoutes from '../../../../api';
 
 const StartPage = () => {
   const pokemons = useSelector(selectors.selectPokemonsData);

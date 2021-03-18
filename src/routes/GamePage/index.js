@@ -11,8 +11,6 @@ const GamePage = () => {
 
   const [pokemons, setPokemon] = useState({});
 
-  console.log('GAME', pokemons);
-
   const handleSelectedPokemon = (key, pokemon) => {
     setPokemon((prevState) => {
       if (prevState[key]) {

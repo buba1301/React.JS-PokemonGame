@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import { NotificationManager } from 'react-notifications';
 
 import Menu from '../Menu';
@@ -41,10 +40,9 @@ const addPokemonsInDatabase = (data, user) => {
 const MenuHeader = ({ bgActive }) => {
   const [isActiveMenu, setActiveMenu] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
+  const [showDropDownMenu, setShowDropDownMenu] = useState(false);
 
   const dispatch = useDispatch();
-
-  const history = useHistory();
 
   const handleOpenCloseMenu = () => {
     setActiveMenu((prevState) => {
@@ -57,7 +55,7 @@ const MenuHeader = ({ bgActive }) => {
   };
 
   const handleClickUserIcon = () => {
-    history.push('/user');
+    setShowDropDownMenu((prevState) => !prevState)
   };
 
   const handleSubmitLoginForm = async (props) => {
@@ -90,6 +88,7 @@ const MenuHeader = ({ bgActive }) => {
       <NavBar
         handleOpenCloseMenu={handleOpenCloseMenu}
         isActiveMenu={isActiveMenu}
+        isOpenDropDownMenu={showDropDownMenu}
         bgActive={bgActive}
         onClickLogin={handleClickLogin}
         onClickUserIcon={handleClickUserIcon}
