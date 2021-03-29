@@ -1,7 +1,26 @@
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
+
+import { selectors } from '../../slices';
 import s from './NavBar.module.css';
 
-const NavBar = ({ handleOpenCloseMenu, isActiveMenu, bgActive = false }) => {
+import { ReactComponent as LogoSvg } from '../../assets/Logo.svg';
+import { ReactComponent as LoginSvg } from '../../assets/login.svg';
+import { ReactComponent as UserSvg } from '../../assets/user.svg';
+
+import LoginUserDropDownMenu from '../LoginUserDropDownMenu';
+
+const NavBar = ({
+  handleOpenCloseMenu,
+  isActiveMenu,
+  isOpenDropDownMenu,
+  bgActive = false,
+  onClickLogin,
+  onClickUserIcon,
+}) => {
+  const isLoading = useSelector(selectors.selectUserFetch);
+  const localId = useSelector(selectors.selectUserLocalId);
+
   const handleClick = () => {
     handleOpenCloseMenu && handleOpenCloseMenu();
   };
@@ -12,9 +31,26 @@ const NavBar = ({ handleOpenCloseMenu, isActiveMenu, bgActive = false }) => {
   return (
     <nav id={s.navbar} className={navClassNames}>
       <div className={s.navWrapper}>
-        <p className={s.brand}>LOGO</p>
-        <div className={buttonClassNames} onClick={handleClick}>
-          <span />
+        <div className={s.brand}>
+          <LogoSvg />
+        </div>
+        <div className={s.loginAndMenu}>
+          {!isLoading && !localId && (
+            <div className={s.loginWrap} onClick={onClickLogin}>
+              <LoginSvg />
+            </div>
+          )}
+          {!isLoading && localId && (
+            <div className={s.loginWrap} onClick={onClickUserIcon}>
+              <UserSvg />
+            </div>
+          )}
+          {isOpenDropDownMenu && (
+            <LoginUserDropDownMenu onClick={onClickUserIcon} />
+          )}
+          <div className={buttonClassNames} onClick={handleClick}>
+            <span />
+          </div>
         </div>
       </div>
     </nav>
