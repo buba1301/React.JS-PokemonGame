@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { selectors } from '.';
 import apiRoutes from '../api';
-import fireBaseClass from '../service/firebase';
 
 const slice = createSlice({
   name: 'pokemons',
